@@ -1,0 +1,13 @@
+# IDE配置
+.idea/
+*.iml
+
+# 编译文件
+target/
+*.class
+
+# 系统文件
+.DS_Store
+
+# 日志文件
+*.log
