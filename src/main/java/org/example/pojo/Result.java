@@ -1,18 +1,14 @@
 package org.example.pojo;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
-/**
- * 后端统一返回结果
- */
-@Data
-public class Result {
+public class Result implements Serializable {
+    private Integer code;
+    private String msg;
+    private Object data;
 
-    private Integer code; //编码：1成功，0为失败
-    private String msg; //错误信息
-    private Object data; //数据
+    public Result() {
+    }
 
     public static Result success() {
         Result result = new Result();
@@ -36,4 +32,37 @@ public class Result {
         return result;
     }
 
+    // 新增 getter/setter
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
