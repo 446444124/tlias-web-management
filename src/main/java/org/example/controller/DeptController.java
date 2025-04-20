@@ -23,10 +23,17 @@ public class DeptController {
         return Result.success(deptlist);
     }
 
-@DeleteMapping("/depts")
+   @DeleteMapping("/depts")
     public Result delete(Integer id){
         System.out.println("根据id删除部门数据"+id);
         deptService.deleteById(id);
+        return Result.success();
+    }
+
+    @PostMapping("/depts")
+    public Result add(@RequestBody Dept dept){
+        System.out.println("新增部门:"+dept);
+        deptService.add(dept);
         return Result.success();
     }
 }
