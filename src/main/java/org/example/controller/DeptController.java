@@ -1,13 +1,12 @@
 package org.example.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.ibatis.annotations.Delete;
 import org.example.pojo.Dept;
 import org.example.pojo.Result;
 import org.example.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +21,12 @@ public class DeptController {
         System.out.println("查询全部部门数据");
         List<Dept> deptlist =  deptService.findAll();
         return Result.success(deptlist);
+    }
+
+@DeleteMapping("/depts")
+    public Result delete(Integer id){
+        System.out.println("根据id删除部门数据"+id);
+        deptService.deleteById(id);
+        return Result.success();
     }
 }

@@ -1,9 +1,6 @@
 package org.example.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.example.pojo.Dept;
 
 import java.util.List;
@@ -18,4 +15,8 @@ public interface DeptMApper {
 
     @Select("select id, name, create_time, update_time from dept order by update_time desc ;")
     List<Dept> findAll();
+
+    @Delete("delete from dept where id = #{id}")
+
+    void deleteById(Integer id);
 }
