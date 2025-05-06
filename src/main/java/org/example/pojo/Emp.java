@@ -2,6 +2,7 @@ package org.example.pojo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Emp {
     private Integer id;
@@ -17,8 +18,10 @@ public class Emp {
     private Integer deptId;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-    //新增部门名称
+    //部门名称
     private String deptName;
+     //新增员工的工作经历
+    private List<EmpExpr> exprList;
     // 无参构造器
     public Emp() {
     }
@@ -26,7 +29,7 @@ public class Emp {
     // 全参构造器（根据需求可选）
     public Emp(Integer id, String username, String password, String name, Integer gender,
               String phone, Integer job, Integer salary, String image, LocalDate entryDate,
-              Integer deptId, LocalDateTime createTime, LocalDateTime updateTime) {
+              Integer deptId, LocalDateTime createTime, LocalDateTime updateTime, List<EmpExpr> exprList) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -40,6 +43,7 @@ public class Emp {
         this.deptId = deptId;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.exprList = exprList;
     }
 
     // Getter/Setter 方法
@@ -82,6 +86,15 @@ public class Emp {
     public LocalDateTime getUpdateTime() { return updateTime; }
     public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
 
+    // 新增工作经历的getter/setter
+    public List<EmpExpr> getExprList() {
+        return exprList;
+    }
+
+    public void setExprList(List<EmpExpr> exprList) {
+        this.exprList = exprList;
+    }
+
     // 新增部门名称的getter/setter
     public String getDeptName() {
         return deptName;
@@ -108,6 +121,7 @@ public class Emp {
                 ", deptId=" + deptId +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", exprList=" + exprList +  // 新增工作经历输出
                 '}';
     }
 

@@ -13,4 +13,6 @@ public interface EmpService {
 //                         LocalDate begin, LocalDate end);
 
     PageResult<Emp> page(EmpQueryParam empQueryParam);
+
+    void save(Emp emp);
 }
