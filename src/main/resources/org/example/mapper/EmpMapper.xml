@@ -3,6 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.mapper.EmpMapper">
+    <update id="updateById">
+        update emp
+        <set>
+            <if test="username != null and username !=''" >username = #{username},</if>
+            <if test="password != null and password !=''">password = #{password},</if>
+            <if test="name != null and name !=''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone !=''">phone = #{phone},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="salary != null">salary = #{salary},</if>
+            <if test="image != null and image !=''">image = #{image},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--    批量删除员工信息-->
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+        #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByEmpIds">
+        delete from emp_expr where emp_id in
+        <foreach collection="empIds" item="empId" separator="," open="(" close=")">
+            #{empId}
+        </foreach>
+    </delete>
 
     <select id="list" resultType="org.example.pojo.Emp">
         select e.*,d.name from emp e left join dept d on d.id = e.dept_id
@@ -17,5 +47,41 @@
             and e.entry_date between #{begin} and #{end}
         </if>
         </where> order by e.update_time desc
+    </select>
+<!--定义resultmap-->
+    <resultMap id="empResultMap" type="org.example.pojo.Emp">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="job" column="job"/>
+        <result property="salary" column="salary"/>
+        <result property="image" column="image"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="exprList" ofType="org.example.pojo.EmpExpr">
+            <id property="id" column="ee_id"/>
+            <result property="empId" column="ee_empid"/>
+            <result property="begin" column="ee_begin"/>
+            <result property="end" column="ee_end"/>
+            <result property="company" column="ee_company"/>
+            <result property="job" column="ee_job"/>
+        </collection>
+    </resultMap>
+<!--    根据id查询员工信息-->
+    <select id="getById" resultMap="empResultMap">
+        select e.*,
+               ee.id ee_id,
+               ee.emp_id ee_empid,
+               ee.begin ee_begin,
+               ee.end ee_end,
+               ee.company ee_company,
+               ee.job ee_job
+        from emp e left join emp_expr ee on e.id = ee.emp_id
+        where e.id=#{id};
     </select>
 </mapper>
