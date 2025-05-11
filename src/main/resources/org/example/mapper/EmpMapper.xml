@@ -20,6 +20,7 @@
         </set>
         where id = #{id}
     </update>
+
     <!--    批量删除员工信息-->
     <delete id="deleteByIds">
         delete from emp where id in
@@ -83,5 +84,23 @@
                ee.job ee_job
         from emp e left join emp_expr ee on e.id = ee.emp_id
         where e.id=#{id};
+    </select>
+    <select id="countEmpJobData" resultType="java.util.Map">
+        select
+            (case job when 1 then '班主任'
+                      when 2 then '讲师'
+                      when 3 then '学工主管'
+                      when 4 then '教研主任'
+                      when 5 then '咨询师'
+                      else '其他' end) pos,
+            count(*) num
+        from emp group by job order by num;
+    </select>
+
+    <select id="countEmpGenderData" resultType="java.util.Map">
+        select
+            if(gender=1 , '男性员工','女性员工') name,
+            count(*) value
+        from emp group by gender;
     </select>
 </mapper>

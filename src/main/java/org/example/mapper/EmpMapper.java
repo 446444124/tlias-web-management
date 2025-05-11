@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -43,4 +44,9 @@ public interface EmpMapper {
     Emp getById(Integer id);
 
     void updateById(Emp emp);
+
+    @MapKey("pos")
+    List<Map<String,Object>> countEmpJobData();
+    @MapKey("name")
+    List<Map<String, Object>> countEmpGenderData();
 }
