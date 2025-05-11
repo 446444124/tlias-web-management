@@ -36,7 +36,7 @@
     </delete>
 
     <select id="list" resultType="org.example.pojo.Emp">
-        select e.*,d.name from emp e left join dept d on d.id = e.dept_id
+        select e.*,d.name as deptName from emp e left join dept d on d.id = e.dept_id
         <where>
             <if test="name!=null and name!=''">
                 e.name like concat('%',#{name},'%')
