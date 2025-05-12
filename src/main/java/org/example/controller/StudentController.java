@@ -29,4 +29,16 @@ public class StudentController {
         studentService.addStudent(student);
         return Result.success();
     }
+    @GetMapping("/{id}")
+    public Result findStudentById(@PathVariable Integer id){
+        log.info("查询学生:{}",id);
+        Student student = studentService.findStudentById(id);
+        return Result.success(student);
+    }
+    @PutMapping
+    public Result updateStudent(@RequestBody Student student){
+        log.info("修改学生:{}",student);
+        studentService.updateStudent(student);
+        return Result.success();
+    }
 }

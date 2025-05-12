@@ -35,4 +35,15 @@ public class StudentServiceImpl implements StudentService {
         student.setUpdateTime(LocalDateTime.now());
         studentMapper.addStudent(student);
     }
+
+    @Override
+    public Student findStudentById(Integer id) {
+        return studentMapper.findStudentById(id);
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        student.setUpdateTime(LocalDateTime.now());
+        studentMapper.updateStudent(student);
+    }
 }
