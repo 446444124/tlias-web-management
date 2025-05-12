@@ -47,4 +47,10 @@ public class ClazzController {
         clazzService.updateClazz(clazz);
         return Result.success();
     }
+
+    @GetMapping("/list")
+    public Result getAllClazzs(){
+        log.info("获取所有班级");
+        return Result.success(clazzService.getAllClazzs());
+    }
 }
