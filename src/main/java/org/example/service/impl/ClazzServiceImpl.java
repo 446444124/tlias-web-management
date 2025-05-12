@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.example.exception.ClassHasStudentsException;
 import org.example.mapper.ClazzMapper;
 import org.example.pojo.Clazz;
 import org.example.pojo.ClazzQueryParam;
@@ -31,6 +32,10 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public void delClazzById(Integer id) {
+        int studentCount = clazzMapper.selectStudentCountByClazzId(id);
+        if (studentCount > 0) {
+            throw new ClassHasStudentsException("该班级下有学生, 不能直接删除");
+        }
         clazzMapper.delClazzById(id);
     }
 

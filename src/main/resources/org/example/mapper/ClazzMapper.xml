@@ -44,7 +44,12 @@
             </if>
         </where>order by c.end_date desc
     </select>
+
     <select id="getClazzById" resultType="org.example.pojo.Clazz">
      select c.* ,e.name masterName from clazz c left join emp e on c.master_id=e.id where c.id=#{id}
+    </select>
+
+    <select id="selectStudentCountByClazzId" resultType="int">
+        SELECT COUNT(*) FROM student WHERE clazz_id = #{clazzId}
     </select>
 </mapper>

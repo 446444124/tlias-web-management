@@ -16,4 +16,6 @@ public interface ClazzMapper {
     Clazz getClazzById(Integer id);
 
     void updateClazz(Clazz clazz);
+
+    int selectStudentCountByClazzId(Integer clazzId);
 }
