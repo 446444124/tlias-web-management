@@ -3,7 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.mapper.ClazzMapper">
-
+<!--    增加班级-->
+    <insert id="insertClazz">
+        insert into clazz(name,room,begin_date,end_date,master_id,subject,create_time,update_time)
+        values(#{name},#{room},#{beginDate},#{endDate},#{masterId},#{subject},#{createTime},#{updateTime})
+    </insert>
+<!--    修改班级-->
+    <update id="updateClazz">
+        UPDATE clazz
+        <set>
+        <if test="name != null and name!=''">name = #{name},</if>
+            <if test="room != null and room!=''">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <!--    删除班级-->
+    <delete id="delClazzById">
+        delete from clazz where id=#{id}
+    </delete>
+<!--    查询班级-->
     <select id="list" resultType="org.example.pojo.Clazz">
         SELECT c.*,
                e.name AS masterName,
@@ -20,5 +43,8 @@
                 AND c.end_date BETWEEN #{begin} AND #{end}
             </if>
         </where>order by c.end_date desc
+    </select>
+    <select id="getClazzById" resultType="org.example.pojo.Clazz">
+     select c.* ,e.name masterName from clazz c left join emp e on c.master_id=e.id where c.id=#{id}
     </select>
 </mapper>

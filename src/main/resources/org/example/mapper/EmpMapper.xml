@@ -103,4 +103,7 @@
             count(*) value
         from emp group by gender;
     </select>
+    <select id="getAllEmp" resultType="org.example.pojo.Emp">
+        select e.*,d.name as deptName from emp e left join dept d on d.id = e.dept_id
+    </select>
 </mapper>

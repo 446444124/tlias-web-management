@@ -6,4 +6,12 @@ import org.example.pojo.PageResult;
 
 public interface ClazzService {
     PageResult<Clazz> page(ClazzQueryParam clazzQueryParam);
+
+    void delClazzById(Integer id);
+
+    void addClazz(Clazz clazz);
+
+    Clazz getClazzById(Integer id);
+
+    void updateClazz(Clazz clazz);
 }
