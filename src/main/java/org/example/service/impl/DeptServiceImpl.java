@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import org.example.exception.DeptHasEmpsException;
 import org.example.mapper.DeptMApper;
 import org.example.pojo.Dept;
 import org.example.service.DeptService;
@@ -20,6 +21,10 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public void deleteById(Integer id) {
+        int empCount = deptMApper.selectEmpCountByDeptId(id);
+        if(empCount>0){
+            throw new DeptHasEmpsException("该部门下有员工，不能删除");
+        }
         deptMApper.deleteById(id);
     }
 

@@ -52,6 +52,7 @@
     <select id="selectStudentCountByClazzId" resultType="int">
         SELECT COUNT(*) FROM student WHERE clazz_id = #{clazzId}
     </select>
+
     <select id="getAllClazzs" resultType="org.example.pojo.Clazz">
         select * from clazz
     </select>
