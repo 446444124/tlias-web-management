@@ -12,4 +12,8 @@ public interface StudentService {
     Student findStudentById(Integer id);
 
     void updateStudent(Student student);
+
+    void delStudentByIds(Integer[] ids);
+
+    void updateViolation(Integer id, Integer score);
 }

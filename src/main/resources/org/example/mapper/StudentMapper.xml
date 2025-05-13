@@ -28,6 +28,21 @@
         </set>
         WHERE id = #{id}
     </update>
+    <update id="updateViolation">
+        UPDATE student
+        SET violation_count = violation_count + 1,
+            violation_score = violation_score + #{score},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delStudentByIds">
+        DELETE FROM student
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 
     <select id="page" resultType="org.example.pojo.Student">
         SELECT
@@ -50,4 +65,26 @@
     <select id="findStudentById" resultType="org.example.pojo.Student">
         select * from student where  id=#{id}
     </select>
+    <select id="countStudentCountData" resultType="java.util.Map">
+        select
+            c.name as name,
+            count(*) as num
+        from student s left join clazz c on s.clazz_id = c.id
+        group by clazz_id;
+    </select>
+    <select id="countStudentDegreeData" resultType="java.util.Map">
+        select
+            (case
+                 when degree = 1 then '初中'
+                 when degree = 2 then '高中'
+                 when degree = 3 then '大专'
+                 when degree = 4 then '本科'
+                 when degree = 5 then '硕士'
+                 else '博士' end) name,
+            count(*) value
+        from student
+        group by degree;
+
+    </select>
+
 </mapper>

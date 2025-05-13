@@ -41,4 +41,17 @@ public class StudentController {
         studentService.updateStudent(student);
         return Result.success();
     }
+
+    @DeleteMapping("/{ids}")
+    public Result delStudentByIds(@PathVariable Integer[] ids){
+        log.info("删除学生:{}",ids);
+        studentService.delStudentByIds(ids);
+        return Result.success();
+    }
+    @PutMapping("/violation/{id}/{score}")
+    public Result updateViolation(@PathVariable Integer id,@PathVariable Integer score){
+        log.info("修改违规次数");
+        studentService.updateViolation(id,score);
+        return Result.success();
+    }
 }
