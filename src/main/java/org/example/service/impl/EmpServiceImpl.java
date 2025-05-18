@@ -2,12 +2,16 @@ package org.example.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.example.controller.LoginController;
 import org.example.mapper.EmpExprMapper;
 import org.example.mapper.EmpLogMapper;
 import org.example.mapper.EmpMapper;
 import org.example.pojo.*;
 import org.example.service.EmpLogService;
 import org.example.service.EmpService;
+import org.example.utils.JwtUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,14 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmpServiceImpl implements EmpService {
+    private static final Logger log = LoggerFactory.getLogger(EmpServiceImpl.class);
+
     @Autowired
     private EmpMapper empMapper;
     @Autowired
@@ -126,5 +134,22 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Emp> getAllEmp() {
         return empMapper.getAllEmp();
+    }
+
+    @Override
+    public LoginInfo Login(Emp emp) {
+        Emp e =empMapper.selectByUsernameAndPassword(emp);
+        if(e != null){
+            log.info("登录成功:{}",e);
+            Map<String, Object> claims= new HashMap<>();
+            claims.put("id",e.getId());
+            claims.put("username",e.getUsername());
+            String jwt = JwtUtils.generateJwt(claims);
+            return new LoginInfo(e.getId(),e.getUsername(),e.getName(),jwt);
+        }
+        else {
+            return null;
+        }
+
     }
 }

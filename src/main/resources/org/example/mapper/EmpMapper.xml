@@ -106,5 +106,8 @@
     <select id="getAllEmp" resultType="org.example.pojo.Emp">
         select e.*,d.name as deptName from emp e left join dept d on d.id = e.dept_id
     </select>
+    <select id="selectByUsernameAndPassword" resultType="org.example.pojo.Emp">
+        select id,username,name from emp where username = #{username} and password = #{password}
+    </select>
 
 </mapper>
