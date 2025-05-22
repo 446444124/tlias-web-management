@@ -5,6 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.utils.CurrentHolder;
 import org.example.utils.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,10 @@ public class TokenFilter implements Filter {
             }
             //解析token
         try {
-            JwtUtils.parseJWT(token);
+            Claims claims = JwtUtils.parseJWT(token);
+            Integer id = Integer.valueOf(claims.get("id").toString());
+            CurrentHolder.setCurrentId(id);
+            log.info("当前用户id为:{}",id);
         } catch (Exception e) {
            log.info("token解析失败,未登录");
            response.setStatus(401);
@@ -43,6 +47,9 @@ public class TokenFilter implements Filter {
         //放行
         log.info("token解析成功,放行");
         filterChain.doFilter(request, response);
+
+        //删除当前用户id
+        CurrentHolder.remove();
 
     }
     }
